@@ -1,0 +1,11 @@
+[
+  {
+    "name": "ProofVerified",
+    "type": "event",
+    "inputs": [
+      { "name": "prover",     "type": "address", "indexed": true  },
+      { "name": "nullifier",  "type": "bytes32",  "indexed": true  },
+      { "name": "validUntil", "type": "uint256",  "indexed": false }
+    ]
+  }
+]
