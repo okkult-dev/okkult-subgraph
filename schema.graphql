@@ -1,0 +1,186 @@
+# ── Compliance Proofs ──────────────────────────────────────
+
+type ComplianceProof @entity(immutable: true) {
+  " Unique ID: txHash + logIndex "
+  id:          Bytes!
+
+  " Address that submitted the proof "
+  prover:      Bytes!
+
+  " Nullifier hash — unique per proof "
+  nullifier:   Bytes!
+
+  " Timestamp when proof expires (unix) "
+  validUntil:  BigInt!
+
+  " Ethereum block number "
+  blockNumber: BigInt!
+
+  " Block timestamp "
+  timestamp:   BigInt!
+
+  " Transaction hash "
+  txHash:      Bytes!
+}
+
+# ── Shield Events ──────────────────────────────────────────
+
+type ShieldEvent @entity(immutable: true) {
+  " Unique ID: txHash + logIndex "
+  id:          Bytes!
+
+  " UTXO commitment hash "
+  commitment:  Bytes!
+
+  " Position in UTXO Merkle tree "
+  leafIndex:   BigInt!
+
+  " ERC-20 token address "
+  token:       Bytes!
+
+  " Fee paid (0.20% of amount) "
+  fee:         BigInt!
+
+  " Ethereum block number "
+  blockNumber: BigInt!
+
+  " Block timestamp "
+  timestamp:   BigInt!
+
+  " Transaction hash "
+  txHash:      Bytes!
+}
+
+type UnshieldEvent @entity(immutable: true) {
+  " Unique ID: txHash + logIndex "
+  id:          Bytes!
+
+  " Nullifier of the spent UTXO "
+  nullifier:   Bytes!
+
+  " Recipient address (public) "
+  recipient:   Bytes!
+
+  " ERC-20 token address "
+  token:       Bytes!
+
+  " Amount withdrawn (after fee) "
+  amount:      BigInt!
+
+  " Block timestamp "
+  timestamp:   BigInt!
+
+  " Transaction hash "
+  txHash:      Bytes!
+}
+
+type PrivateTransferEvent @entity(immutable: true) {
+  " Unique ID: txHash + logIndex "
+  id:             Bytes!
+
+  " Nullifier of the spent input UTXO "
+  inNullifier:    Bytes!
+
+  " Commitment of output UTXO 1 (recipient) "
+  outCommitment1: Bytes!
+
+  " Commitment of output UTXO 2 (change) "
+  outCommitment2: Bytes!
+
+  " Block timestamp "
+  timestamp:      BigInt!
+
+  " Transaction hash "
+  txHash:         Bytes!
+}
+
+# ── Governance ─────────────────────────────────────────────
+
+type Poll @entity {
+  " Poll ID "
+  id:          String!
+
+  " Poll title "
+  title:       String!
+
+  " Merkle root of eligible voters "
+  voterRoot:   Bytes!
+
+  " Poll start time (unix) "
+  startTime:   BigInt!
+
+  " Poll end time (unix) "
+  endTime:     BigInt!
+
+  " Total votes cast "
+  totalVotes:  BigInt!
+
+  " Total yes votes (revealed after tally) "
+  totalYes:    BigInt!
+
+  " Total no votes (revealed after tally) "
+  totalNo:     BigInt!
+
+  " Whether poll has been tallied "
+  tallied:     Boolean!
+
+  " Coordinator address "
+  coordinator: Bytes!
+
+  " Block timestamp of creation "
+  createdAt:   BigInt!
+
+  " All votes cast in this poll "
+  votes:       [VoteEvent!]! @derivedFrom(field: "poll")
+}
+
+type VoteEvent @entity(immutable: true) {
+  " Unique ID: txHash + logIndex "
+  id:             Bytes!
+
+  " Poll this vote belongs to "
+  poll:           Poll!
+
+  " Encrypted vote hash "
+  encryptedVote:  Bytes!
+
+  " Nullifier — proves unique vote "
+  nullifier:      Bytes!
+
+  " Block timestamp "
+  timestamp:      BigInt!
+
+  " Transaction hash "
+  txHash:         Bytes!
+}
+
+# ── Protocol Stats ─────────────────────────────────────────
+
+type ProtocolStats @entity {
+  " Always 'global' "
+  id:               String!
+
+  " Total compliance proofs submitted "
+  totalProofs:      BigInt!
+
+  " Total shield operations "
+  totalShields:     BigInt!
+
+  " Total unshield operations "
+  totalUnshields:   BigInt!
+
+  " Total private transfers "
+  totalTransfers:   BigInt!
+
+  " Total votes cast across all polls "
+  totalVotes:       BigInt!
+
+  " Total polls created "
+  totalPolls:       BigInt!
+
+  " Unique addresses that submitted proofs "
+  uniqueProvers:    BigInt!
+
+  " Last event block timestamp "
+  lastUpdated:      BigInt!
+}
