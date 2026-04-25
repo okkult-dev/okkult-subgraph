@@ -1,0 +1,32 @@
+[
+  {
+    "name": "PollCreated",
+    "type": "event",
+    "inputs": [
+      { "name": "pollId",    "type": "uint256", "indexed": true  },
+      { "name": "title",     "type": "string",  "indexed": false },
+      { "name": "voterRoot", "type": "bytes32", "indexed": false },
+      { "name": "startTime", "type": "uint256", "indexed": false },
+      { "name": "endTime",   "type": "uint256", "indexed": false }
+    ]
+  },
+  {
+    "name": "VoteCast",
+    "type": "event",
+    "inputs": [
+      { "name": "pollId",        "type": "uint256", "indexed": true  },
+      { "name": "nullifier",     "type": "bytes32", "indexed": true  },
+      { "name": "encryptedVote", "type": "bytes32", "indexed": false }
+    ]
+  },
+  {
+    "name": "PollTallied",
+    "type": "event",
+    "inputs": [
+      { "name": "pollId",     "type": "uint256", "indexed": true  },
+      { "name": "totalYes",   "type": "uint256", "indexed": false },
+      { "name": "totalNo",    "type": "uint256", "indexed": false },
+      { "name": "totalVotes", "type": "uint256", "indexed": false }
+    ]
+  }
+]
