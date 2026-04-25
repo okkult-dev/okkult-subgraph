@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Shielded",
+    "type": "event",
+    "inputs": [
+      { "name": "commitment", "type": "bytes32", "indexed": true  },
+      { "name": "leafIndex",  "type": "uint256", "indexed": true  },
+      { "name": "token",      "type": "address", "indexed": false },
+      { "name": "fee",        "type": "uint256", "indexed": false }
+    ]
+  },
+  {
+    "name": "Unshielded",
+    "type": "event",
+    "inputs": [
+      { "name": "nullifier",  "type": "bytes32", "indexed": true  },
+      { "name": "recipient",  "type": "address", "indexed": true  },
+      { "name": "token",      "type": "address", "indexed": false },
+      { "name": "amount",     "type": "uint256", "indexed": false }
+    ]
+  },
+  {
+    "name": "PrivateTransfer",
+    "type": "event",
+    "inputs": [
+      { "name": "inNullifier",    "type": "bytes32", "indexed": true },
+      { "name": "outCommitment1", "type": "bytes32", "indexed": true },
+      { "name": "outCommitment2", "type": "bytes32", "indexed": true }
+    ]
+  }
+]
